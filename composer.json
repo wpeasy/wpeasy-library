@@ -1,0 +1,19 @@
+{
+    "name": "alanblair/wpeasy-library",
+    "version": "1.0.0",
+    "type": "library",
+    "description": "Library used by WPEasy WordPress plugins",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Alan Blair",
+            "email": "alan@wpeasy.net"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "WPEasyLibrary\\": "src/WPEasyLibrary/"
+        }
+    }
+}
