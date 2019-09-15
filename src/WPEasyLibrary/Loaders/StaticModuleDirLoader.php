@@ -6,7 +6,6 @@
  */
 
 namespace WPEasyLibrary\Loaders;
-use mysql_xdevapi\Exception;
 use WPEasyLibrary\Exceptions\ModuleNotExistException;
 use WPEasyLibrary\Interfaces\IStaticInitialiser;
 
