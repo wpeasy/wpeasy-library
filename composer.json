@@ -13,7 +13,8 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "WPEasyLibrary\\": "src/WPEasyLibrary/"
+            "WPEasyLibrary\\": "src/WPEasyLibrary/",
+            "WPETests\\" : "tests/WPETests/"
         }
     }
 }
