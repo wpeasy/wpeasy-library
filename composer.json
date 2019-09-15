@@ -1,6 +1,7 @@
 {
     "name": "alanblair/wpeasy-library",
     "version": "1.0.0",
+    "minimum-stability": "dev",
     "type": "library",
     "description": "Library used by WPEasy WordPress plugins",
     "license": "GPL-2.0",
