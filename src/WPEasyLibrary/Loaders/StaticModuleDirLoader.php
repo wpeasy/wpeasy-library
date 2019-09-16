@@ -19,7 +19,7 @@ class StaticModuleDirLoader
     private $_frontControllerName;
     private $_moduleClassRoot;
 
-    public function __construct( $moduleDir, $rootClassName, $frontControllerName = 'Controller\ModuleController' )
+    public function __construct( $moduleDir, $rootClassName, $frontControllerName = '\Controller\ModuleController' )
     {
         $this->_moduleDir = $moduleDir;
         $this->_rootClassName = $rootClassName;

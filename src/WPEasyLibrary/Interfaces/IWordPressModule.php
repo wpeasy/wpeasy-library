@@ -4,7 +4,7 @@
 namespace WPEasyLibrary\Interfaces;
 
 
-interface IModule
+interface IWordPressModule
 {
     static function activate();
     static function deactivate();

@@ -3,10 +3,10 @@
 
 namespace WPETests\Modules\TestModule\Controller;
 
-use WPEasyLibrary\Interfaces\IModule;
+use WPEasyLibrary\Interfaces\IWordPressModule;
 use WPEasyLibrary\Interfaces\IStaticInitialiser;
 
-class ModuleController implements IStaticInitialiser, IModule
+class WordPressModuleController implements IStaticInitialiser, IWordPressModule
 {
     static $name = 'Test Module';
     static $description = 'Test to see if this loader works';
