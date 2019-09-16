@@ -19,7 +19,6 @@ class WPEasyApplication
         if(self::$_init) return;
         self::$_init = true;
         add_action('admin_menu', [__CLASS__, 'adminMenuTop']);
-
     }
 
     static function adminMenuTop()
