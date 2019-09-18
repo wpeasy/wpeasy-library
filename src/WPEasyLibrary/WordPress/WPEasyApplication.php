@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * Sets up a root Application to be used by all WPEasy plugins
+ *
+ * Common styles and scripts will be found in https://www.wpeasy.net/ext
+ * @See the WPEasy project
+ *
+ */
 
 namespace WPEasyLibrary\WordPress;
-
 
 class WPEasyApplication
 {
@@ -13,14 +19,26 @@ class WPEasyApplication
     const MENU_PAGE_PERMISSIONS = 'manage_options';
     const MENU_PAGE_SLUG = 'wpe-menu';
     const WPEASY_EXTERNAL_URL = 'https://www.wpeasy.net/ext/';
+    const ADMIN_SCRIPT_SLUG = 'wpe-admin';
 
     static function init()
     {
         if(self::$_init) return;
         self::$_init = true;
         add_action('admin_menu', [__CLASS__, 'adminMenuTop']);
+        add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'], 1);
     }
 
+    static function admin_enqueue_scripts()
+    {
+        wp_register_style(self::ADMIN_SCRIPT_SLUG , self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-admin.style.css');
+        wp_register_script(self::ADMIN_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/wpe-admin.bundle.js',['jquery'], false, true );
+    }
+
+    /**
+     * Add the top level menu
+     * Note: Adding submenus shoudl use a priority of 11 rto work properly.
+     */
     static function adminMenuTop()
     {
         global $admin_page_hooks;
@@ -36,6 +54,9 @@ class WPEasyApplication
         );
     }
 
+    /**
+     * Print out a basic page for the root menu
+     */
     static function menuPageOutput()
     {
         ?>
