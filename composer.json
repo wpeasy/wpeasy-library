@@ -1,6 +1,6 @@
 {
     "name": "alanblair/wpeasy-library",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "type": "library",
     "description": "Library used by WPEasy WordPress plugins",
     "license": "GPL-2.0",
@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "twig/twig": "3.x-dev"
+        "twig/twig": "^2.0"
     },
     "autoload": {
         "psr-4": {
