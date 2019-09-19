@@ -34,9 +34,10 @@ class WPEasyApplication
     static function admin_enqueue_scripts()
     {
         wp_register_style(self::ADMIN_SCRIPT_SLUG , self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-admin.style.css');
+        wp_register_style(self::FRONTEND_SCRIPT_SLUG , self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-front.style.css');
 
         wp_register_script(self::COMMON_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/common.bundle.js', ['jquery']);
-        
+
         wp_register_script(
                 self::ADMIN_SCRIPT_SLUG,
                 self::WPEASY_EXTERNAL_URL . 'assets/js/wpe-admin.bundle.js',
