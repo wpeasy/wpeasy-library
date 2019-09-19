@@ -20,6 +20,8 @@ class WPEasyApplication
     const MENU_PAGE_SLUG = 'wpe-menu';
     const WPEASY_EXTERNAL_URL = 'https://www.wpeasy.net/ext/';
     const ADMIN_SCRIPT_SLUG = 'wpe-admin';
+    const COMMON_SCRIPT_SLUG = 'wpe-common';
+    const FRONTEND_SCRIPT_SLUG = 'wpe-frontend';
 
     static function init()
     {
@@ -32,7 +34,24 @@ class WPEasyApplication
     static function admin_enqueue_scripts()
     {
         wp_register_style(self::ADMIN_SCRIPT_SLUG , self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-admin.style.css');
-        wp_register_script(self::ADMIN_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/wpe-admin.bundle.js',['jquery'], false, true );
+
+        wp_register_script(self::COMMON_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/common.bundle.js', ['jquery']);
+        
+        wp_register_script(
+                self::ADMIN_SCRIPT_SLUG,
+                self::WPEASY_EXTERNAL_URL . 'assets/js/wpe-admin.bundle.js',
+                [self::COMMON_SCRIPT_SLUG],
+                false,
+                true
+        );
+
+        wp_register_script(
+            self::FRONTEND_SCRIPT_SLUG,
+            self::WPEASY_EXTERNAL_URL . 'assets/js/wpe-front.bundle.js',
+            [self::COMMON_SCRIPT_SLUG],
+            false,
+            true
+        );
     }
 
     /**
