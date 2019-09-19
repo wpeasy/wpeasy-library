@@ -29,12 +29,12 @@ class WPEasyApplication
         self::$_init = true;
         add_action('admin_menu', [__CLASS__, 'adminMenuTop']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'], 1);
+        add_action('wp_enqueue_scripts', [__CLASS__, 'wp_enqueue_scripts'], 1);
     }
 
     static function admin_enqueue_scripts()
     {
         wp_register_style(self::ADMIN_SCRIPT_SLUG , self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-admin.style.css');
-        wp_register_style(self::FRONTEND_SCRIPT_SLUG , self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-front.style.css');
 
         wp_register_script(self::COMMON_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/common.bundle.js', ['jquery']);
 
@@ -45,6 +45,13 @@ class WPEasyApplication
                 false,
                 true
         );
+    }
+
+    static function wp_enqueue_scripts()
+    {
+        wp_register_style(self::FRONTEND_SCRIPT_SLUG , self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-front.style.css');
+
+        wp_register_script(self::COMMON_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/common.bundle.js', ['jquery']);
 
         wp_register_script(
             self::FRONTEND_SCRIPT_SLUG,
