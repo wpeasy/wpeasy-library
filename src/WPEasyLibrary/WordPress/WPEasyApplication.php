@@ -14,6 +14,8 @@ class WPEasyApplication
 {
     private static $_init;
 
+    static $loadedPlugins = [];
+
     const MENU_PAGE_TITLE = 'WPEasy Options';
     const MENU_PAGE_NAME = 'WPEasy';
     const MENU_PAGE_PERMISSIONS = 'manage_options';
@@ -25,31 +27,39 @@ class WPEasyApplication
 
     static function init()
     {
-        if(self::$_init) return;
+        if (self::$_init) return;
         self::$_init = true;
         add_action('admin_menu', [__CLASS__, 'adminMenuTop']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'], 1);
         add_action('wp_enqueue_scripts', [__CLASS__, 'wp_enqueue_scripts'], 1);
     }
 
+    static function registerLoadedPlugin($name, $description, $modules)
+    {
+        self::$loadedPlugins[$name] = [
+            'description' => $description,
+            'modules' => $modules
+        ];
+    }
+
     static function admin_enqueue_scripts()
     {
-        wp_register_style(self::ADMIN_SCRIPT_SLUG , self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-admin.style.css');
+        wp_register_style(self::ADMIN_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-admin.style.css');
 
         wp_register_script(self::COMMON_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/common.bundle.js', ['jquery']);
 
         wp_register_script(
-                self::ADMIN_SCRIPT_SLUG,
-                self::WPEASY_EXTERNAL_URL . 'assets/js/wpe-admin.bundle.js',
-                [self::COMMON_SCRIPT_SLUG],
-                false,
-                true
+            self::ADMIN_SCRIPT_SLUG,
+            self::WPEASY_EXTERNAL_URL . 'assets/js/wpe-admin.bundle.js',
+            [self::COMMON_SCRIPT_SLUG],
+            false,
+            true
         );
     }
 
     static function wp_enqueue_scripts()
     {
-        wp_register_style(self::FRONTEND_SCRIPT_SLUG , self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-front.style.css');
+        wp_register_style(self::FRONTEND_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-front.style.css');
 
         wp_register_script(self::COMMON_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/common.bundle.js', ['jquery']);
 
@@ -69,7 +79,7 @@ class WPEasyApplication
     static function adminMenuTop()
     {
         global $admin_page_hooks;
-        if(!empty($admin_page_hooks[self::MENU_PAGE_SLUG])) return;
+        if (!empty($admin_page_hooks[self::MENU_PAGE_SLUG])) return;
 
         add_menu_page(
             self::MENU_PAGE_TITLE,
