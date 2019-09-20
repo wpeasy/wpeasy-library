@@ -14,6 +14,8 @@ class WPEasyApplication
 {
     private static $_init;
 
+    private static $_test;
+
     const MENU_PAGE_TITLE = 'WPEasy Options';
     const MENU_PAGE_NAME = 'WPEasy';
     const MENU_PAGE_PERMISSIONS = 'manage_options';
