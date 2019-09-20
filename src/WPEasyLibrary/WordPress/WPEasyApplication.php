@@ -100,6 +100,7 @@ class WPEasyApplication
         <div class="wrap">
             <h1>WPEasy functions</h1>
             <h2>Please select sub menu items</h2>
+            <?php var_dump(self::$loadedPlugins) ?>
         </div>
         <?php
     }
