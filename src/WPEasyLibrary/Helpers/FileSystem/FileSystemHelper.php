@@ -6,7 +6,6 @@ namespace WPEasyLibrary\Helpers\FileSystem;
 
 class FileSystemHelper
 {
-
     static function deleteCacheContents($dir)
     {
         $lwr = strtolower($dir);
@@ -16,7 +15,7 @@ class FileSystemHelper
         foreach (glob($dir) as $file) {
             if (is_dir($file)) {
                 FileSystemHelper::deleteCacheContents("$file/*");
-                FileSystemHelper::deleteCacheContents($file);
+                rmdir($file);
             } else {
                 unlink($file);
             }
