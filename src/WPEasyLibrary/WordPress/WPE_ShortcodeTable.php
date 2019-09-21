@@ -12,12 +12,10 @@ class WPE_ShortcodeTable
     private $_twig;
     private $_shortcodesArray;
 
-    const TEMPLATE_DIR = __DIR__ . '/_templateCache';
-
     public function __construct($shortcodesArray, $cache = false)
     {
         $loader = new FilesystemLoader(__DIR__ . '/View');
-        $cacheDir = $cache === false ? false : self::TEMPLATE_DIR;
+        $cacheDir = $cache === false ? false : WPEasyApplication::TEMPLATE_DIR;
         $twig = new Environment($loader, [
             'cache' => $cacheDir
         ]);
@@ -25,19 +23,6 @@ class WPE_ShortcodeTable
         $this->_shortcodesArray = $shortcodesArray;
         $this->_twig = $twig;
     }
-
-    static function clearCache()
-    {
-        foreach (glob(self::TEMPLATE_DIR) as $file) {
-            if (is_dir($file)) {
-                self::clearCache("$file/*");
-                self::clearCache($file);
-            } else {
-                unlink($file);
-            }
-        }
-    }
-
 
     public function render()
     {

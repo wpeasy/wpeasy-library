@@ -13,9 +13,8 @@ namespace WPEasyLibrary\WordPress;
 class WPEasyApplication
 {
     private static $_init;
-
     static $loadedPlugins = [];
-
+    const TEMPLATE_DIR = __DIR__ . '/_templateCache';
     const MENU_PAGE_TITLE = 'WPEasy Options';
     const MENU_PAGE_NAME = 'WPEasy';
     const MENU_PAGE_PERMISSIONS = 'manage_options';
