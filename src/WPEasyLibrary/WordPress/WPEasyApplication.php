@@ -10,8 +10,14 @@
 
 namespace WPEasyLibrary\WordPress;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 class WPEasyApplication
 {
+    /**@var $twig Environment */
+    public static $twig;
+
     private static $_init;
     static $loadedPlugins = [];
     const TEMPLATE_DIR = __DIR__ . '/_templateCache';
@@ -28,9 +34,16 @@ class WPEasyApplication
     {
         if (self::$_init) return;
         self::$_init = true;
-        add_action('admin_menu', [__CLASS__, 'adminMenuTop']);
+        add_action('admin_menu', [__CLASS__, 'adminMenuTop'], 1);
         add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'], 1);
         add_action('wp_enqueue_scripts', [__CLASS__, 'wp_enqueue_scripts'], 1);
+
+        $loader = new FilesystemLoader(__DIR__ . '/View');
+        $twig = new Environment($loader, [
+            'cache' => false
+        ]);
+
+        self::$twig = $twig;
     }
 
     static function registerLoadedPlugin($name, $description, $modules)
@@ -73,7 +86,7 @@ class WPEasyApplication
 
     /**
      * Add the top level menu
-     * Note: Adding submenus shoudl use a priority of 11 rto work properly.
+     * Note: Adding submenus should use a priority of 11 to work properly.
      */
     static function adminMenuTop()
     {
@@ -95,12 +108,9 @@ class WPEasyApplication
      */
     static function menuPageOutput()
     {
-        ?>
-        <div class="wrap">
-            <h1>WPEasy functions</h1>
-            <h2>Please select sub menu items</h2>
-            <?php var_dump(self::$loadedPlugins) ?>
-        </div>
-        <?php
+        self::$twig->render(
+                'commonMenuView.twig',
+                ['plugins' => self::$loadedPlugins]
+        );
     }
 }
