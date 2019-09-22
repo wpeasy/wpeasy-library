@@ -110,7 +110,7 @@ class WPEasyApplication
     {
         self::$twig->render(
                 'commonMenuView.twig',
-                ['plugins' => self::$loadedPlugins]
+                ['plugins' => self::$loadedPlugins] 
         );
     }
 }
