@@ -108,9 +108,9 @@ class WPEasyApplication
      */
     static function menuPageOutput()
     {
-        self::$twig->render(
+        echo self::$twig->render(
                 'commonMenuView.twig',
-                ['plugins' => self::$loadedPlugins] 
+                ['plugins' => self::$loadedPlugins]
         );
     }
 }
