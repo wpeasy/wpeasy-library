@@ -42,6 +42,7 @@ class WPEasyApplication
         $twig = new Environment($loader, [
             'cache' => false
         ]);
+        $twig->addGlobal('wpeExtUrl', self::WPEASY_EXTERNAL_URL);
 
         self::$twig = $twig;
     }
@@ -110,7 +111,9 @@ class WPEasyApplication
     {
         echo self::$twig->render(
                 'commonMenuView.twig',
-                ['plugins' => self::$loadedPlugins]
+                [
+                    'plugins' => self::$loadedPlugins
+                ]
         );
     }
 }
