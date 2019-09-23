@@ -26,6 +26,11 @@ class WPE_ShortcodeTable
 
     public function render()
     {
-        echo $this->_twig->render('shortcodeTable.twig', ['shortcodes' => $this->_shortcodesArray]);
+        echo $this->_twig->render(
+            'shortcodeTable.twig',
+            [
+                'shortcodes' => $this->_shortcodesArray
+            ]
+        );
     }
 }

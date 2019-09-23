@@ -9,6 +9,12 @@
         </thead>
         <tbody>
         {% for tag, s in shortcodes %}
+        {% set attStr = "" %}
+        {% if s.atts|length %}
+            {% for key,atts in s.atts %}
+                {% set attStr = attStr ~ key ~"=\"" ~ atts.default ~ "\" " %}
+            {% endfor %}
+        {% endif %}
         <tr>
             <td>{{ s.description }}</td>
             <td>
@@ -16,7 +22,7 @@
                     <div class="wpe-copy-to-clipboard">[{{ tag }}]</div>
                 {% endif %}
                 {% if s.enclosing %}
-                    <div class="wpe-copy-to-clipboard">[{{ tag }}]Your Content[/{{ tag }}]</div>
+                    <div class="wpe-copy-to-clipboard">[{{ tag }} {{ attStr }}]Your Content[/{{ tag }}]</div>
                 {% endif %}
             </td>
             <td>
