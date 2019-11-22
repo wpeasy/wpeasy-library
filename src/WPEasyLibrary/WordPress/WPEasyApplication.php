@@ -47,7 +47,7 @@ class WPEasyApplication
         self::$twig = $twig;
     }
 
-    static function registerLoadedPlugin($name, $description, $modules)
+    static function registerLoadedPlugin($name, $description, $modules = [])
     {
         self::$loadedPlugins[$name] = [
             'description' => $description,
