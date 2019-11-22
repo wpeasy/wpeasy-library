@@ -57,7 +57,7 @@ class WPEasyApplication
 
     static function admin_enqueue_scripts()
     {
-        wp_register_style(self::ADMIN_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-admin.style.css');
+        wp_register_style( self::ADMIN_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-admin.style.css');
 
         wp_register_script(self::COMMON_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/common.bundle.js', ['jquery']);
 
@@ -109,6 +109,9 @@ class WPEasyApplication
      */
     static function menuPageOutput()
     {
+        wp_enqueue_script( self::COMMON_SCRIPT_SLUG );
+        wp_enqueue_style(self::ADMIN_SCRIPT_SLUG);
+
         echo self::$twig->render(
                 'commonMenuView.twig',
                 [
