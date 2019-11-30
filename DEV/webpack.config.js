@@ -14,7 +14,9 @@ module.exports = {
     context: __dirname + '/src',
 
     entry: {
-        "wpe-admin": "./admin/index.js"
+        "wpe-lib-admin": "./admin/index.js",
+        "wpe-lib-frontend": "./frontend/index.js",
+        "wpe-lib-common": "./common/index.js"
     },
 
     output: {
@@ -73,7 +75,7 @@ module.exports = {
                 // vendor chunk
                 vendor: {
                     // name of the chunk
-                    name: 'vendor',
+                    name: 'wpe-lib-vendor',
 
                     // async + async chunks
                     chunks: 'all',
@@ -87,7 +89,7 @@ module.exports = {
 
                 // common chunk
                 common: {
-                    name: 'common',
+                    name: 'wpe-lib-common',
                     minChunks: 2,
                     chunks: 'all',
                     priority: 10,

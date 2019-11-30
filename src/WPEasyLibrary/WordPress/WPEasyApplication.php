@@ -30,14 +30,20 @@ class WPEasyApplication
     const COMMON_SCRIPT_SLUG = 'wpe-common';
     const FRONTEND_SCRIPT_SLUG = 'wpe-frontend';
 
-    static function init($config = null)
+    static $callingPluginConfig;
+
+    /*
+     * Initialised by the first plugin using this library
+     */
+    static function init($callingPluginConfig)
     {
         if (self::$_init) return;
         self::$_init = true;
 
-        if($config){
-            self::registerLoadedPlugin($config['pluginName'], $config['pluginDescription'], $config['modules']);
-        }
+        self::$callingPluginConfig = $callingPluginConfig;
+
+        self::registerLoadedPlugin($callingPluginConfig['pluginName'], $callingPluginConfig['pluginDescription'], $callingPluginConfig['modules']);
+
 
         add_action('admin_menu', [__CLASS__, 'adminMenuTop'], 1);
         add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'], 1);
@@ -62,32 +68,29 @@ class WPEasyApplication
 
     static function admin_enqueue_scripts()
     {
-        wp_register_style( self::ADMIN_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-admin.style.css');
+        $callingPluginURL = self::$callingPluginConfig['pluginURL'];
+        $assetsURL = $callingPluginURL . 'vendor/alanblair/wpeasy-library/assets/';
+        wp_register_style( 'wpe-lib-common', $assetsURL . 'css/wpe-lib-common.style.css');
+        wp_register_style( 'wpe-lib-admin', $assetsURL . 'css/wpe-lib-admin.style.css', ['wpe-lib-common']);
 
-        wp_register_script(self::COMMON_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/common.bundle.js', ['jquery']);
+        wp_register_script('wpe-lib-vendor', $assetsURL . 'js/wpe-lib-vendor.bundle.js');
+        wp_register_script('wpe-lib-common', $assetsURL . 'js/wpe-lib-common.bundle.js', ['wpe-lib-vendor']);
+        wp_register_script('wpe-lib-admin', $assetsURL . 'js/wpe-lib-admin.bundle.js', ['jquery','wpe-lib-common']);
 
-        wp_register_script(
-            self::ADMIN_SCRIPT_SLUG,
-            self::WPEASY_EXTERNAL_URL . 'assets/js/wpe-admin.bundle.js',
-            [self::COMMON_SCRIPT_SLUG],
-            false,
-            true
-        );
     }
 
     static function wp_enqueue_scripts()
     {
-        wp_register_style(self::FRONTEND_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/css/wpe-front.style.css');
+        $callingPluginURL = self::$callingPluginConfig['pluginURL'];
+        $assetsURL = $callingPluginURL . 'vendor/alanblair/wpeasy-library/assets/';
+        wp_register_style( 'wpe-lib-common', $assetsURL . 'css/wpe-lib-common.style.css');
+        wp_register_style( 'wpe-lib-frontend', $assetsURL . 'css/wpe-lib-frontend.style.css', ['wpe-lib-common']);
+        wp_enqueue_style('wpe-lib-frontend');
 
-        wp_register_script(self::COMMON_SCRIPT_SLUG, self::WPEASY_EXTERNAL_URL . 'assets/js/common.bundle.js', ['jquery']);
-
-        wp_register_script(
-            self::FRONTEND_SCRIPT_SLUG,
-            self::WPEASY_EXTERNAL_URL . 'assets/js/wpe-front.bundle.js',
-            [self::COMMON_SCRIPT_SLUG],
-            false,
-            true
-        );
+        wp_register_script('wpe-lib-vendor', $assetsURL . 'js/wpe-lib-vendor.bundle.js');
+        wp_register_script('wpe-lib-common', $assetsURL . 'js/wpe-lib-common.bundle.js', ['wpe-lib-vendor']);
+        wp_register_script('wpe-lib-frontend', $assetsURL . 'js/wpe-lib-frontend.bundle.js', ['jquery','wpe-lib-common']);
+        wp_enqueue_script('wpe-lib-frontend',[], false, true);
     }
 
     /**
@@ -114,8 +117,11 @@ class WPEasyApplication
      */
     static function menuPageOutput()
     {
-        wp_enqueue_script( self::COMMON_SCRIPT_SLUG );
-        wp_enqueue_style(self::ADMIN_SCRIPT_SLUG);
+        /*
+         * Enqueued here because only needed if the admin page is displayed.
+         */
+        wp_enqueue_script( 'wpe-lib-admin');
+        wp_enqueue_style('wpe-lib-admin');
 
         echo self::$twig->render(
                 'commonMenuView.twig',
