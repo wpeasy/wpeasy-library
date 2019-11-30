@@ -1,0 +1,9 @@
+@import "application";
+//Namespace to avoid conflicts
+.wpe-admin-wrapper {
+  * {
+    box-sizing: border-box;
+  }
+
+  @import "bootstrap";
+}

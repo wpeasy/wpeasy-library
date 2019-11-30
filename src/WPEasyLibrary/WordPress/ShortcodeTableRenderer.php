@@ -53,7 +53,7 @@ OUT;
     {
         $str = '';
         foreach ($shortcodeAtts as $att=>$detail){
-            if($detail['showInExample'] === true){
+            if(@$detail['showInExample'] === true){
                 $str.= " $att=\"" . $detail['default'] . "\"";
             }
 

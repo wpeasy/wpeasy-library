@@ -1,0 +1,17 @@
+@import "~bootstrap-scss/functions";
+@import "~bootstrap-scss/mixins";
+@import "~bootstrap-scss/variables";
+
+//@import "~bootstrap-scss/bootstrap-reboot"; can'use. Messes up some Admin styles
+@import "~bootstrap-scss/utilities";
+@import "~bootstrap-scss/tables";
+@import "~bootstrap-scss/grid";
+@import "~bootstrap-scss/nav";
+
+//table fixed, override Wp Admin CSS
+table{
+  border-collapse: collapse;
+  th{
+    text-align: left;
+  }
+}
