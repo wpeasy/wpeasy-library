@@ -30,10 +30,15 @@ class WPEasyApplication
     const COMMON_SCRIPT_SLUG = 'wpe-common';
     const FRONTEND_SCRIPT_SLUG = 'wpe-frontend';
 
-    static function init()
+    static function init($config = null)
     {
         if (self::$_init) return;
         self::$_init = true;
+
+        if($config){
+            self::registerLoadedPlugin($config['pluginName'], $config['pluginDescription'], $config['modules']);
+        }
+
         add_action('admin_menu', [__CLASS__, 'adminMenuTop'], 1);
         add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'], 1);
         add_action('wp_enqueue_scripts', [__CLASS__, 'wp_enqueue_scripts'], 1);
