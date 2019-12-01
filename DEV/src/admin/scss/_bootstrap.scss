@@ -3,10 +3,12 @@
 @import "~bootstrap-scss/variables";
 
 //@import "~bootstrap-scss/bootstrap-reboot"; can'use. Messes up some Admin styles
+@import "./reboot_custom";
 @import "~bootstrap-scss/utilities";
 @import "~bootstrap-scss/tables";
 @import "~bootstrap-scss/grid";
 @import "~bootstrap-scss/nav";
+@import "~bootstrap-scss/navbar";
 @import "~bootstrap-scss/buttons";
 @import "~bootstrap-scss/images";
 
