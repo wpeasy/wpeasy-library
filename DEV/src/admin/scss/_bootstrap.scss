@@ -2,6 +2,21 @@
 @import "~bootstrap-scss/mixins";
 @import "~bootstrap-scss/variables";
 
+/*
+Change Theme Colors
+ */
+$blue: #0099ce !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #28a745 !default;
+$teal:    #20c997 !default;
+$cyan:    #17a2b8 !default;
+
+
 //@import "~bootstrap-scss/bootstrap-reboot"; can'use. Messes up some Admin styles
 @import "./reboot_custom";
 @import "~bootstrap-scss/utilities";
