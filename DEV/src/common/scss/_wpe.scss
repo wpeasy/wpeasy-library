@@ -4,6 +4,7 @@
 @import "~bootstrap-scss/variables";
 
 .wpe-card-container {
+  box-shadow: $box-shadow-sm;
   &.wpe-card-info{
     .wpe-card-header{
       background-color: $info;
