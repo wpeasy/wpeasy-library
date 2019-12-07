@@ -1,2 +1,4 @@
 import './scss/style.scss'
-const a = 1
+import  wpeUtils from './js/wpeUtils.js'
+
+window.wpeUtils = wpeUtils;

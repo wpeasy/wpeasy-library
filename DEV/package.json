@@ -12,7 +12,9 @@
   },
   "author": "",
   "license": "proprietary",
-  "dependencies": {},
+  "dependencies": {
+    "sweetalert2": "^9.4.3"
+  },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
