@@ -30,17 +30,20 @@ class WPEasyApplication
     const COMMON_SCRIPT_SLUG = 'wpe-common';
     const FRONTEND_SCRIPT_SLUG = 'wpe-frontend';
 
-    static $callingPluginConfig;
+    static $firstCallingPluginConf;
 
     /*
      * Initialised by the first plugin using this library
+     * This library is included in every WPEasy plugin code
+     * Only the first loaded plugin will initialise this class
+     * All js and css assets will be referenced for the plugin's assets 
      */
     static function init($callingPluginConfig)
     {
         if (self::$_init) return;
         self::$_init = true;
 
-        self::$callingPluginConfig = $callingPluginConfig;
+        self::$firstCallingPluginConf = $callingPluginConfig;
 
         self::registerLoadedPlugin($callingPluginConfig['pluginName'], $callingPluginConfig['pluginDescription'], $callingPluginConfig['modules']);
 
@@ -68,7 +71,7 @@ class WPEasyApplication
 
     static function admin_enqueue_scripts()
     {
-        $callingPluginURL = self::$callingPluginConfig['pluginURL'];
+        $callingPluginURL = self::$firstCallingPluginConf['pluginURL'];
         $assetsURL = $callingPluginURL . 'vendor/alanblair/wpeasy-library/assets/';
         wp_register_style( 'wpe-lib-common', $assetsURL . 'css/wpe-lib-common.style.css');
         wp_register_style( 'wpe-lib-admin', $assetsURL . 'css/wpe-lib-admin.style.css', ['wpe-lib-common']);
@@ -84,7 +87,7 @@ class WPEasyApplication
 
     static function wp_enqueue_scripts()
     {
-        $callingPluginURL = self::$callingPluginConfig['pluginURL'];
+        $callingPluginURL = self::$firstCallingPluginConf['pluginURL'];
         $assetsURL = $callingPluginURL . 'vendor/alanblair/wpeasy-library/assets/';
         wp_register_style( 'wpe-lib-common', $assetsURL . 'css/wpe-lib-common.style.css');
         wp_register_style( 'wpe-lib-frontend', $assetsURL . 'css/wpe-lib-frontend.style.css', ['wpe-lib-common']);
