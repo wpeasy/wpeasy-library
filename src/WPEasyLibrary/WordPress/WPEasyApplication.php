@@ -36,7 +36,7 @@ class WPEasyApplication
      * Initialised by the first plugin using this library
      * This library is included in every WPEasy plugin code
      * Only the first loaded plugin will initialise this class
-     * All js and css assets will be referenced for the plugin's assets 
+     * All js and css assets will be referenced for the plugin's assets
      */
     static function init($callingPluginConfig)
     {
@@ -44,8 +44,6 @@ class WPEasyApplication
         self::$_init = true;
 
         self::$firstCallingPluginConf = $callingPluginConfig;
-
-        self::registerLoadedPlugin($callingPluginConfig['pluginName'], $callingPluginConfig['pluginDescription'], $callingPluginConfig['modules']);
 
 
         add_action('admin_menu', [__CLASS__, 'adminMenuTop'], 1);
