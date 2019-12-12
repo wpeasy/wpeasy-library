@@ -4,7 +4,7 @@
 @import "~bootstrap-scss/variables";
 
 
-//@import "~bootstrap-scss/bootstrap-reboot"; can'use. Messes up some Admin styles
+//@import "~bootstrap-scss/bootstrap-reboot"; can't use. Messes up some Admin styles
 @import "./reboot_custom";
 @import "~bootstrap-scss/utilities";
 @import "~bootstrap-scss/tables";
@@ -19,6 +19,12 @@
 @import "~bootstrap-scss/close";
 @import "~bootstrap-scss/spinners";
 @import "~bootstrap-scss/card";
+
+//Card Overrides. WP Admin uses .card class
+.card{
+  max-width: unset;
+  padding: unset;
+}
 
 //table fixed, override Wp Admin CSS
 table{
