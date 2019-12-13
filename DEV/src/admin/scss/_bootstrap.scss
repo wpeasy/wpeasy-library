@@ -27,6 +27,14 @@
 .card{
   max-width: unset;
   padding: unset;
+  &.disabled{
+    opacity: .7;
+
+    .disabled-message{
+      display: block !important;
+    }
+  }
+
 }
 
 //table fixed, override Wp Admin CSS
