@@ -84,8 +84,8 @@ class WPEasyApplication
         wp_register_style( 'wpe-lib-frontend', $assetsURL . 'css/wpe-lib-frontend.style.css', ['wpe-lib-common']);
         wp_enqueue_style('wpe-lib-frontend');
 
-        wp_register_script('wpe-lib-vendor', $assetsURL . 'js/wpe-lib-vendor.bundle.js');
-        wp_register_script('wpe-lib-common', $assetsURL . 'js/wpe-lib-common.bundle.js', ['wpe-lib-vendor']);
+        wp_register_script('wpe-lib-vendor', $assetsURL . 'js/wpe-lib-vendor.bundle.js', ['jquery'], false,true);
+        wp_register_script('wpe-lib-common', $assetsURL . 'js/wpe-lib-common.bundle.js', ['wpe-lib-vendor'], false, true);
         wp_register_script('wpe-lib-frontend', $assetsURL . 'js/wpe-lib-frontend.bundle.js', ['jquery','wpe-lib-common'], false, true);
         wp_enqueue_script('wpe-lib-frontend');
     }
