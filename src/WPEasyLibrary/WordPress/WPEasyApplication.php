@@ -66,9 +66,9 @@ class WPEasyApplication
         wp_register_style( 'wpe-lib-common', $assetsURL . 'css/wpe-lib-common.style.css');
         wp_register_style( 'wpe-lib-admin', $assetsURL . 'css/wpe-lib-admin.style.css', ['wpe-lib-common']);
 
-        wp_register_script('wpe-lib-vendor', $assetsURL . 'js/wpe-lib-vendor.bundle.js');
-        wp_register_script('wpe-lib-common', $assetsURL . 'js/wpe-lib-common.bundle.js', ['wpe-lib-vendor']);
-        wp_register_script('wpe-lib-admin', $assetsURL . 'js/wpe-lib-admin.bundle.js', ['jquery','wpe-lib-common']);
+        wp_register_script('wpe-lib-vendor', $assetsURL . 'js/wpe-lib-vendor.bundle.js', false, true);
+        wp_register_script('wpe-lib-common', $assetsURL . 'js/wpe-lib-common.bundle.js', ['wpe-lib-vendor'], false, true);
+        wp_register_script('wpe-lib-admin', $assetsURL . 'js/wpe-lib-admin.bundle.js', ['jquery','wpe-lib-common'], false, true);
         wp_enqueue_style('wpe-lib-admin'); //Done here so css is in header.. Will be on all Admin pages though.
 
         wp_register_script('popper', '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', ['jquery'], false, true);
