@@ -10,13 +10,12 @@
 
 namespace WPEasyLibrary\WordPress;
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+
+use WPEasyLibrary\Helpers\View\ViewHelper;
 
 class WPEasyApplication
 {
-    /**@var $twig Environment */
-    public static $twig;
+
 
     private static $_init;
     static $loadedPlugins = [];
@@ -50,13 +49,6 @@ class WPEasyApplication
         add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'], 1);
         add_action('wp_enqueue_scripts', [__CLASS__, 'wp_enqueue_scripts'], 1);
 
-        $loader = new FilesystemLoader(__DIR__ . '/View');
-        $twig = new Environment($loader, [
-            'cache' => false
-        ]);
-        $twig->addGlobal('wpeExtUrl', self::WPEASY_EXTERNAL_URL);
-
-        self::$twig = $twig;
     }
 
     static function registerLoadedPlugin($name, $description, $modules = [])
@@ -127,11 +119,11 @@ class WPEasyApplication
         wp_enqueue_script( 'wpe-lib-admin');
         wp_enqueue_style('wpe-lib-admin');
 
-        echo self::$twig->render(
-                'commonMenuView.twig',
-                [
-                    'plugins' => self::$loadedPlugins
-                ]
-        );
+        ViewHelper::getView(__DIR__. '/View/commonMenuView.phtml',
+	        [
+		        'wpeExtUrl' => self::WPEASY_EXTERNAL_URL,
+	        	'plugins' => self::$loadedPlugins
+	        ],
+	        true);
     }
 }

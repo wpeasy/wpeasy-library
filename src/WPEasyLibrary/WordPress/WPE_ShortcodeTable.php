@@ -6,6 +6,7 @@ namespace WPEasyLibrary\WordPress;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use WPEasyLibrary\Helpers\View\ViewHelper;
 
 class WPE_ShortcodeTable
 {
@@ -14,23 +15,16 @@ class WPE_ShortcodeTable
 
     public function __construct($shortcodesArray, $cache = false)
     {
-        $loader = new FilesystemLoader(__DIR__ . '/View');
-        $cacheDir = $cache === false ? false : WPEasyApplication::TEMPLATE_DIR;
-        $twig = new Environment($loader, [
-            'cache' => $cacheDir
-        ]);
-
         $this->_shortcodesArray = $shortcodesArray;
-        $this->_twig = $twig;
     }
 
     public function render()
     {
-        echo $this->_twig->render(
-            'shortcodeTable.twig',
-            [
-                'shortcodes' => $this->_shortcodesArray
-            ]
-        );
+        ViewHelper::getView(
+        	__DIR__ . '/View/shortcodeTable.phtml',
+	        [
+		        'shortcodes' => $this->_shortcodesArray
+	        ],
+	        true);
     }
 }

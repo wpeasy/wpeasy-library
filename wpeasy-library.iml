@@ -6,9 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/tests/WPETests" isTestSource="false" packagePrefix="WPETests\" />
       <sourceFolder url="file://$MODULE_DIR$/src/WPEasyLibrary" isTestSource="false" packagePrefix="WPEasyLibrary\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-ctype" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/twig/twig" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
