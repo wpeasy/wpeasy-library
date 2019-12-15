@@ -19,6 +19,10 @@ module.exports = {
         "wpe-lib-common": "./common/index.js"
     },
 
+    externals: {
+        jquery: 'jQuery'
+    },
+
     output: {
         path: outputAbsPath,
         filename: "assets/js/[name].bundle.js"
