@@ -22,7 +22,6 @@ import 'jquery'
         const triggerEvent = $this.data('triggerEvent')
         const triggerSelector = $this.data('triggerSelector')
         const action = $this.data('action')
-        const dataAttrJSON = JSON.parse(this[0].dataset['data'])
 
         this.initialize = function () {
             if (triggerEvent === 'immediate') {
@@ -65,7 +64,7 @@ import 'jquery'
                 {
                     dataType: 'html',
                     url: settings.url,
-                    data: $.extend({}, {action: action}, dataAttrJSON, providerData)
+                    data: $.extend({}, {action: action},  providerData)
                 }
             )
                 .done(function (result) {
