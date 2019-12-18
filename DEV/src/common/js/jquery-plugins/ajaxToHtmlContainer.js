@@ -1,15 +1,25 @@
 import 'jquery'
 
+/**
+ * If onDoneCallback or onErrorCallback are not defined, returned messages will be added to the $bodyEl
+ * Otherwise, it is up to the callback to display the returned data.
+ */
+
 (function ($) {
     $.fn.ajaxToHtmlContainer = function (options) {
         const $this = $(this)
         let defaults = {
             url: window.ajaxurl,
             dataProvider: null,
-            logEvents: false
+            logEvents: false,
+            onTriggerCallback: null,
+            onDoneCallback: null,
+            onErrorCallback: null,
+            onAlwaysCallback: null
         }
 
         const settings = {...defaults, ...options}
+        const log = settings.logEvents;
 
         if (this.length > 1) {
             this.each(function () {
@@ -26,22 +36,18 @@ import 'jquery'
         this.initialize = function () {
             if (triggerEvent === 'immediate') {
                 doAjax().then(function () {
-                    if (settings.logEvents) {
-                        console.info('doAjax:immediate, action:' + action)
-                    }
+                    if(log) { console.info('doAjax:immediate, action:' + action) }
                 })
             } else {
-                console.info('BOUND: ' + triggerSelector + ' on ' + triggerEvent)
+                if(log) { console.info('BOUND: ' + triggerSelector + ' on ' + triggerEvent) }
                 $(triggerSelector).on(triggerEvent, function (e) {
-                    console.log($(e.currentTarget).data('ajaxAction'), action)
+                    if(log) { console.log('EVENT:', $(e.currentTarget).data('ajaxAction'), action) }
                     if ($(e.target).data('ajaxAction') !== action) {
                         //console.error('Error. The trigger element action does not match this element.')
                         return;
                     }
                     doAjax().then(function () {
-                        if (settings.logEvents) {
-                            console.info('doAjax:' + triggerSelector + ' | ' + triggerEvent + ' , action:' + action)
-                        }
+                        if(log) { console.info('doAjax:' + triggerSelector + ' | ' + triggerEvent + ' , action:' + action) }
                     })
                 })
             }
@@ -57,8 +63,12 @@ import 'jquery'
                 providerData = settings.dataProvider()
             }
 
+            if(settings.onTriggerCallback){ settings.onTriggerCallback() }
+
             //Add a progress bar
             $bodyEl.html('<div class="progress" style="position: relative;"><div class="progress-bar progress-bar-striped indeterminate"></div></div>');
+
+
 
             $.post(
                 {
@@ -68,15 +78,22 @@ import 'jquery'
                 }
             )
                 .done(function (result) {
-                    $bodyEl.html(result);
-                    if(typeof settings.onDone === 'function'){ settings.onDone(result) }
+                    $bodyEl.html('');//Clear current body
+                    if(settings.onDoneCallback){
+                        settings.onDoneCallback(result)
+                    }else{
+                        $bodyEl.html(result);
+                    }
                 })
                 .fail(function (err) {
-                    $bodyEl.html('<div class="alert alert-danger ">An error occurred: ' + err.responseText + " (" + err.status + ")" + '</div>');
-                    if(typeof settings.onError === 'function'){ settings.onError(err) }
+                    if(settings.onErrorCallback){
+                        settings.onErrorCallback(err)
+                    }else{
+                        $bodyEl.html('<div class="alert alert-danger ">An error occurred: ' + err.responseText + " (" + err.status + ")" + '</div>');
+                    }
                 })
                 .always(function () {
-                    if(typeof settings.onAlways === 'function'){ settings.onAlways() }
+                    if(settings.onAlwaysCallback ){ settings.onAlwaysCallback() }
                 })
         }
 
