@@ -44,19 +44,31 @@ class WPEasyApplication
 
         self::$firstCallingPluginConf = $callingPluginConfig;
 
-
         add_action('admin_menu', [__CLASS__, 'adminMenuTop'], 1);
         add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'], 1);
         add_action('wp_enqueue_scripts', [__CLASS__, 'wp_enqueue_scripts'], 1);
 
+        add_action('plugins_loaded', [__CLASS__, 'initPlugins']);
+
     }
 
-    static function registerLoadedPlugin($name, $description, $modules = [])
+    static function registerLoadedPlugin($config)
     {
-        self::$loadedPlugins[$name] = [
-            'description' => $description,
-            'modules' => $modules
-        ];
+    	self::$loadedPlugins[$config['pluginName']] = $config;
+    }
+
+    static function initPlugins()
+    {
+    	ksort(self::$loadedPlugins);
+    	foreach(self::$loadedPlugins as $name=>$config)
+	    {
+	    	$controller = $config['pluginController'];
+	    	$controller::init($config);
+	    	ksort($config['modules']);
+	    	foreach($config['modules'] as $module){
+	    		$module::init();
+		    }
+	    }
     }
 
     static function admin_enqueue_scripts()
