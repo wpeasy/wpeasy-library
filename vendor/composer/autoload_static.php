@@ -10,7 +10,6 @@ class ComposerStaticInit4802a2f2ff0b26bd822a9069efdd501c
         'W' => 
         array (
             'WPEasyLibrary\\' => 14,
-            'WPETests\\' => 9,
         ),
     );
 
@@ -18,10 +17,6 @@ class ComposerStaticInit4802a2f2ff0b26bd822a9069efdd501c
         'WPEasyLibrary\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/WPEasyLibrary',
-        ),
-        'WPETests\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/tests/WPETests',
         ),
     );
 

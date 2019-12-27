@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'WPEasyLibrary\\' => array($baseDir . '/src/WPEasyLibrary'),
-    'WPETests\\' => array($baseDir . '/tests/WPETests'),
 );
