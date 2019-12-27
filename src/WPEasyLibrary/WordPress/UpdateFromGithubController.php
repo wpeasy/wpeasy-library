@@ -28,8 +28,8 @@ class UpdateFromGithubController
      * $pluginFile WordPress Plugin file, used to determine plugin details
      * Usage:
      *if ( is_admin() ) {
-        new UpdateController( __FILE__, 'github-user', "repository" );
-        }
+    new UpdateController( __FILE__, 'github-user', "repository" );
+    }
      *
      */
     function __construct($pluginFile, $gitHubUsername, $gitHubProjectName, $accessToken = '' ) {
@@ -41,6 +41,7 @@ class UpdateFromGithubController
         $this->username = $gitHubUsername;
         $this->repo = $gitHubProjectName;
         $this->accessToken = $accessToken;
+
     }
 
     // Get information regarding our plugin from WordPress
@@ -73,9 +74,10 @@ class UpdateFromGithubController
         // Use only the latest release
         if ( is_array( $this->githubAPIResult ) ) {
             $this->githubAPIResult = $this->githubAPIResult[0];
+            $this->githubAPIResult->tag_name = preg_replace("/[a-zA-Z]/", "", $this->githubAPIResult->tag_name ); //remove version text
         }
 
-        //file_put_contents(__DIR__ . '/details.json', json_encode($this->githubAPIResult), JSON_PRETTY_PRINT);
+        if(WP_DEBUG) file_put_contents(__DIR__ . '/repo-details.json', json_encode($this->githubAPIResult), JSON_PRETTY_PRINT);
     }
 
     // Push in plugin version information to get the update notification
@@ -91,6 +93,13 @@ class UpdateFromGithubController
 
         // Check the versions if we need to do an update
         $doUpdate = version_compare( $this->githubAPIResult->tag_name, $transient->checked[$this->slug] );
+
+        if(WP_DEBUG) file_put_contents(__DIR__ . '/doUpdate.json', json_encode(
+            [
+                'tag_name' => $this->githubAPIResult->tag_name,
+                'checked'=> $transient->checked[$this->slug]
+            ]
+        ), JSON_PRETTY_PRINT);
 
         // Update the transient to include our updated plugin data
         if ( $doUpdate == 1 ) {
@@ -110,6 +119,7 @@ class UpdateFromGithubController
         }
 
 
+        if(WP_DEBUG) file_put_contents(__DIR__ . '/transient.json', json_encode($transient), JSON_PRETTY_PRINT);
         return $transient;
     }
 

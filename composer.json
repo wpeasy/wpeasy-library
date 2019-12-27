@@ -1,6 +1,5 @@
 {
     "name": "wpeasy/wpeasy-library",
-    "version": "1.0.3",
     "type": "library",
     "description": "Library used by WPEasy WordPress plugins",
     "license": "proprietary",
