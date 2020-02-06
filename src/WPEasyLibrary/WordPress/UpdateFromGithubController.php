@@ -92,7 +92,7 @@ class UpdateFromGithubController
 
 
         // If we have checked the plugin data before, don't re-check
-        if ( empty( $transient->checked ) || ! isset($transient->checked[$this->slug] ) ) {
+        if ( empty( $transient->checked ) ) {
             return $transient;
         }
 
@@ -103,12 +103,12 @@ class UpdateFromGithubController
         $this->getRepoReleaseInfo();
 
         // Check the versions if we need to do an update
-        $doUpdate = version_compare( $this->githubAPIResult->tag_name, $transient->checked[$this->slug] );
+        $doUpdate = version_compare( $this->githubAPIResult->tag_name, @$transient->checked[$this->slug] );
 
         if(WP_DEBUG) file_put_contents(__DIR__ . '/doUpdate.json', json_encode(
             [
                 'tag_name' => $this->githubAPIResult->tag_name,
-                'checked'=> $transient->checked[$this->slug]
+                'checked'=> @$transient->checked[$this->slug]
             ]
         ), JSON_PRETTY_PRINT);
 
