@@ -43,7 +43,8 @@ class WPEasyApplication
         self::$_init = true;
 
         //Set the default PHP timezone based on WordPress settings
-        date_default_timezone_set(TimezoneHelper::getTimezoneString());
+        // Do not do this.. Site Health Check shows and an error
+        //date_default_timezone_set(TimezoneHelper::getTimezoneString());
 
         self::$firstCallingPluginConf = $callingPluginConfig;
 
